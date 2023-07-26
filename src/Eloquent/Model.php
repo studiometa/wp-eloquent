@@ -13,7 +13,7 @@ abstract class Model extends Eloquent {
     /**
      * @param array $attributes
      */
-    public function __construct( array $attributes = array() ) {
+    public function __construct( array $attributes = [] ) {
         static::$resolver = new Resolver();
 
         parent::__construct( $attributes );
@@ -41,7 +41,7 @@ abstract class Model extends Eloquent {
             return $this->table;
         }
 
-        $table = str_replace( '\\', '', snake_case( str_plural( class_basename( $this ) ) ) );
+        $table = str_replace( '\\', '', (string) snake_case( str_plural( class_basename( $this ) ) ) );
 
         return $this->getConnection()->db->prefix . $table ;
     }

@@ -73,7 +73,7 @@ class Database implements ConnectionInterface
      *
      * @return \Illuminate\Database\Query\Builder
      */
-    public function table($table)
+    public function table($table, $as = null)
     {
         $processor = $this->getPostProcessor();
 
@@ -177,7 +177,7 @@ class Database implements ConnectionInterface
     private function bind_params($query, $bindings, $update = false)
     {
 
-        $query = str_replace('"', '`', $query);
+        $query = str_replace('"', '`', (string) $query);
         $bindings = $this->prepareBindings($bindings);
 
         if (!$bindings) {
@@ -194,7 +194,7 @@ class Database implements ConnectionInterface
             return $replace;
         }, $bindings);
 
-        $query = str_replace(array('%', '?'), array('%%', '%s'), $query);
+        $query = str_replace(['%', '?'], ['%%', '%s'], $query);
         $query = vsprintf($query, $bindings);
 
         return $query;
@@ -209,7 +209,7 @@ class Database implements ConnectionInterface
      *
      * @return array
      */
-    public function bind_and_run($query, $bindings = array())
+    public function bind_and_run($query, $bindings = [])
     {
         $new_query = $this->bind_params($query, $bindings);
 
@@ -229,7 +229,7 @@ class Database implements ConnectionInterface
      *
      * @return bool
      */
-    public function insert($query, $bindings = array())
+    public function insert($query, $bindings = [])
     {
         return $this->statement($query, $bindings);
     }
@@ -242,7 +242,7 @@ class Database implements ConnectionInterface
      *
      * @return int
      */
-    public function update($query, $bindings = array())
+    public function update($query, $bindings = [])
     {
         return $this->affectingStatement($query, $bindings);
     }
@@ -255,7 +255,7 @@ class Database implements ConnectionInterface
      *
      * @return int
      */
-    public function delete($query, $bindings = array())
+    public function delete($query, $bindings = [])
     {
         return $this->affectingStatement($query, $bindings);
     }
@@ -268,7 +268,7 @@ class Database implements ConnectionInterface
      *
      * @return bool
      */
-    public function statement($query, $bindings = array())
+    public function statement($query, $bindings = [])
     {
         $new_query = $this->bind_params($query, $bindings, true);
 
@@ -283,7 +283,7 @@ class Database implements ConnectionInterface
      *
      * @return int
      */
-    public function affectingStatement($query, $bindings = array())
+    public function affectingStatement($query, $bindings = [])
     {
         $new_query = $this->bind_params($query, $bindings, true);
 

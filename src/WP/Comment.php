@@ -16,6 +16,6 @@ class Comment extends Model
      */
     public function post()
     {
-        return $this->hasOne('WeDevs\ORM\WP\Post');
+        return $this->hasOne(\WeDevs\ORM\WP\Post::class);
     }
 }

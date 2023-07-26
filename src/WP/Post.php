@@ -16,8 +16,8 @@ class Post extends Model
     protected $post_type = null;
     protected $primaryKey = 'ID';
 
-    const CREATED_AT = 'post_date';
-    const UPDATED_AT = 'post_modified';
+    final public const CREATED_AT = 'post_date';
+    final public const UPDATED_AT = 'post_modified';
 
     /**
      * Filter by post type
@@ -67,7 +67,7 @@ class Post extends Model
      */
     public function comments()
     {
-        return $this->hasMany('WeDevs\ORM\WP\Comment', 'comment_post_ID');
+        return $this->hasMany(\WeDevs\ORM\WP\Comment::class, 'comment_post_ID');
     }
 
     /**
@@ -77,6 +77,6 @@ class Post extends Model
      */
     public function meta()
     {
-        return $this->hasMany('WeDevs\ORM\WP\PostMeta', 'post_id');
+        return $this->hasMany(\WeDevs\ORM\WP\PostMeta::class, 'post_id');
     }
 }

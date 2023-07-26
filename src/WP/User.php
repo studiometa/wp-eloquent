@@ -12,6 +12,6 @@ class User extends Model
 
     public function meta()
     {
-        return $this->hasMany('WeDevs\ORM\WP\UserMeta', 'user_id');
+        return $this->hasMany(\WeDevs\ORM\WP\UserMeta::class, 'user_id');
     }
 }
